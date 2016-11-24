@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.alvosenet.alvoid.MainActivity">
+
+    <Button
+        android:text="Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:id="@+id/StartBtn"
+        android:onClick="onClick" />
+
+    <Button
+        android:text="End"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:id="@+id/EndBtn"
+        android:layout_alignBaseline="@+id/StartBtn"
+        android:layout_alignBottom="@+id/StartBtn"
+        android:layout_toEndOf="@+id/StartBtn"
+        android:onClick="onClick" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/endTime"
+        android:layout_below="@+id/EndBtn"
+        android:layout_alignStart="@+id/EndBtn"
+        android:layout_marginStart="13dp" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/startTime"
+        android:layout_below="@+id/StartBtn"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp" />
+
+    <Button
+        android:text="Set"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startTime"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="53dp"
+        android:id="@+id/Set"
+        android:onClick="onClick" />
+
+    <Button
+        android:text="Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Set"
+        android:layout_alignStart="@+id/EndBtn"
+        android:id="@+id/Cancel"
+        android:onClick="onClick" />
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/switch_locksetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:checked="false"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp" />
+</RelativeLayout>
