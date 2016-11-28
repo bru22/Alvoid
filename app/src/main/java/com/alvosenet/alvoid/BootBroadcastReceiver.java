@@ -16,6 +16,10 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
     private JobScheduler mJobScheduler;
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        //load config file
+        ConfigurationManager.loadConfiguration(context);
+
         mJobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         ComponentName jobservice = new ComponentName(context.getPackageName(), OnTimeJobService.class.getName());

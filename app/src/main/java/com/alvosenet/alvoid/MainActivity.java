@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
 
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         SharedPreferencesUtil.init(context);
 
         mSwitchd = (SwitchCompat) this.findViewById(R.id.switch_locksetting);
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Load Congfig from Config file
+        ConfigurationManager.loadConfiguration(context);
     }
 
     public void onClick(View view){

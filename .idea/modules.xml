@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Alvoid.iml" filepath="$PROJECT_DIR$/Alvoid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Alvoid.iml" filepath="$PROJECT_DIR$/Alvoid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lockscreenusingservice/lockscreenusingservice.iml" filepath="$PROJECT_DIR$/lockscreenusingservice/lockscreenusingservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/lockscreenusingservice/lockscreenusingservice.iml" filepath="$PROJECT_DIR$/lockscreenusingservice/lockscreenusingservice.iml" />
     </modules>
   </component>

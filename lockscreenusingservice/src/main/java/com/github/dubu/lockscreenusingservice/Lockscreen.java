@@ -13,6 +13,9 @@ public class Lockscreen {
     private Context mContext = null;
     public static final String ISSOFTKEY = "ISSOFTKEY";
     public static final String ISLOCK = "ISLOCK";
+    public static final String STARTTIME = "STARTTIME";
+    public static final String ENDTIME = "ENDTIME";
+
     private static Lockscreen mLockscreenInstance;
     public static Lockscreen getInstance(Context context) {
         if (mLockscreenInstance == null) {
