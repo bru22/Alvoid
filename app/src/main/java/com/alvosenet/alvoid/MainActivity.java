@@ -65,11 +65,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);
-                    Lockscreen.getInstance(context).startLockscreenService();
+                    ConfigurationManager.setIsLockScreen(true);
+//                    SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);
+//                    Lockscreen.getInstance(context).startLockscreenService();
                 } else {
-                    SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, false);
-                    Lockscreen.getInstance(context).stopLockscreenService();
+                    ConfigurationManager.setIsLockScreen(false);
+                    mJobScheduler.cancel(1);
+//                    SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, false);
+//                    Lockscreen.getInstance(context).stopLockscreenService();
                 }
 
             }
@@ -77,7 +80,49 @@ public class MainActivity extends AppCompatActivity {
 
         //Load Congfig from Config file
         ConfigurationManager.loadConfiguration(context);
+        //Register broadcastreceiver
+        //LocalBroadcastManager.getInstance(context).registerReceiver(lockscreenReceiver,new IntentFilter("com.alvosenet.alvoid.JobLockScreen"));
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(Tag, "onStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(Tag, "onResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(Tag, "onPause");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mJobScheduler.cancel(1);
+    }
+//    private BroadcastReceiver lockscreenReceiver = new BroadcastReceiver() {
+//        @Override
+//        public void onReceive(Context ctx, Intent intent) {
+//            Log.d(Tag,"LockScreenReceiver onReceive");
+//            Boolean isLock = intent.getBooleanExtra(Lockscreen.ISLOCK,false);
+//            Toast.makeText(getApplicationContext(),"isLock = "+ isLock , Toast.LENGTH_SHORT).show();
+//            if(isLock){
+//                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);
+//                Lockscreen.getInstance(context).startLockscreenService();
+//            }else{
+//                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, false);
+//                Lockscreen.getInstance(context).stopLockscreenService();
+//            }
+//
+//        }
+//    };
 
     public void onClick(View view){
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -114,14 +159,18 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.Set:
                 Log.v(Tag,"Click Set Button");
-                ComponentName jobservice = new ComponentName(getPackageName() , OnTimeJobService.class.getName());
+                if (ConfigurationManager.getIsLockScreen()) {
+                    ComponentName jobservice = new ComponentName(getPackageName(), OnTimeJobService.class.getName());
 
-                JobInfo.Builder builder = new JobInfo.Builder(1, jobservice);
-                builder.setPeriodic(3000);
-                builder.setPersisted(true);
+                    JobInfo.Builder builder = new JobInfo.Builder(1, jobservice);
+                    builder.setPeriodic(60 * 1000); //1 min = 60 secs
+                    builder.setPersisted(true);
 
-                if(mJobScheduler.schedule(builder.build()) <= 0){
-                    Toast.makeText(context, "Schedule failed",Toast.LENGTH_SHORT).show();
+                    if (mJobScheduler.schedule(builder.build()) <= 0) {
+                        Toast.makeText(context, "Schedule failed", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please switch \"ON\" to eable lockscreen config", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.Cancel:

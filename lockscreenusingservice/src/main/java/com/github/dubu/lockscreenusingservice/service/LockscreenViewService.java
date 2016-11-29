@@ -22,7 +22,6 @@ import com.github.dubu.lockscreenusingservice.Lockscreen;
 import com.github.dubu.lockscreenusingservice.LockscreenUtil;
 import com.github.dubu.lockscreenusingservice.R;
 import com.github.dubu.lockscreenusingservice.SharedPreferencesUtil;
-import com.romainpiel.shimmer.Shimmer;
 import com.romainpiel.shimmer.ShimmerTextView;
 
 
@@ -192,8 +191,8 @@ public class LockscreenViewService extends Service {
         mBackgroundLockImageView = (ImageView) mLockscreenView.findViewById(R.id.lockscreen_background_image);
         mForgroundLayout = (RelativeLayout) mLockscreenView.findViewById(R.id.lockscreen_forground_layout);
         mShimmerTextView = (ShimmerTextView) mLockscreenView.findViewById(R.id.shimmer_tv);
-        (new Shimmer()).start(mShimmerTextView);
-        mForgroundLayout.setOnTouchListener(mViewTouchListener);
+        //(new Shimmer()).start(mShimmerTextView);
+        //mForgroundLayout.setOnTouchListener(mViewTouchListener);
 
         mStatusBackgruondDummyView = (RelativeLayout) mLockscreenView.findViewById(R.id.lockscreen_background_status_dummy);
         mStatusForgruondDummyView = (RelativeLayout) mLockscreenView.findViewById(R.id.lockscreen_forground_status_dummy);

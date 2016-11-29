@@ -12,6 +12,17 @@ public class ConfigurationManager {
     private static String startTime = null;
     private static String endTime = null;
     private static Boolean isLockScreen = false;
+    private static Boolean lockState = false; //for not to restart lockscreen service
+
+    public static Boolean getLockState() {
+        return lockState;
+    }
+
+    public static void setLockState(Boolean lockState) {
+        ConfigurationManager.lockState = lockState;
+    }
+
+
 
     public static void loadConfiguration(Context context) {
         ConfigurationUtil.init(context);

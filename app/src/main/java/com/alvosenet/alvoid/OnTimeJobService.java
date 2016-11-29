@@ -2,9 +2,13 @@ package com.alvosenet.alvoid;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
+
+import com.github.dubu.lockscreenusingservice.Lockscreen;
+import com.github.dubu.lockscreenusingservice.SharedPreferencesUtil;
 
 import java.util.Calendar;
 
@@ -15,6 +19,7 @@ import java.util.Calendar;
 public class OnTimeJobService extends JobService {
 
     private static final String Tag = "OnTimeJobService";
+    private Context context = this;
     private Handler mJobHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -29,6 +34,9 @@ public class OnTimeJobService extends JobService {
             int min = calendar.get(Calendar.MINUTE);
 
             String currentTime = Integer.toString(hour) + Integer.toString(min);
+
+            //initial config file
+            ConfigurationManager.loadConfiguration(context);
             String startTime = ConfigurationManager.getStartTime();
             String endTime = ConfigurationManager.getEndTime();
 
@@ -44,9 +52,23 @@ public class OnTimeJobService extends JobService {
                     inTime = true;
                 }
             }
-            Toast.makeText(getApplicationContext(),"inTime = "+ inTime , Toast.LENGTH_SHORT).show();
 
+            SharedPreferencesUtil.init(context);
+            if (inTime && !ConfigurationManager.getLockState()) {
+                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, true);
+                Lockscreen.getInstance(context).startLockscreenService();
+                ConfigurationManager.setLockState(true);
+            } else if (!inTime && ConfigurationManager.getLockState()) {
+                SharedPreferencesUtil.setBoolean(Lockscreen.ISLOCK, false);
+                Lockscreen.getInstance(context).stopLockscreenService();
+                ConfigurationManager.setLockState(false);
+            }
+            //send local broadcast
+//            Intent intent = new Intent("com.alvosenet.alvoid.JobLockScreen");
+//            intent.putExtra(Lockscreen.ISLOCK,inTime);
+//            LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 
+            Toast.makeText(getApplicationContext(), "inTime = " + inTime, Toast.LENGTH_SHORT).show();
             jobFinished((JobParameters) message.obj , false);
             return true;
         }
